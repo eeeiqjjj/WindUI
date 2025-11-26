@@ -4254,6 +4254,7 @@ end
 
 
 
+
 ab.AddSignal(am:GetPropertyChangedSignal"AbsoluteSize",function()
 if not ag.CustomSizeEnabled then
 al.Size=UDim2.new(
@@ -4262,7 +4263,6 @@ al.Size=UDim2.new(
 )
 end
 end)
-
 ab.AddSignal(am.TextButton.MouseEnter,function()
 ad(am.TextButton,.1,{BackgroundTransparency=.93}):Play()
 end)
@@ -4298,43 +4298,56 @@ if typeof(aq.Size)=="number" then
 am.Size=UDim2.new(0,am.AbsoluteSize.X,0,aq.Size)
 elseif typeof(aq.Size)=="UDim2" then
 ag.CustomSizeEnabled=true
+
+local dragWidth=44
+
 am.Size=aq.Size
 am.AutomaticSize=Enum.AutomaticSize.None
 al.Size=aq.Size
+
 local mainList=am:FindFirstChildOfClass("UIListLayout")
 if mainList then mainList:Destroy() end
+
 aj.Position=UDim2.new(0,4,0.5,0)
 aj.AnchorPoint=Vector2.new(0,0.5)
 aj.Size=UDim2.new(0,32,0,32)
+
 ak.Position=UDim2.new(0,38,0.5,0)
 ak.AnchorPoint=Vector2.new(0,0.5)
 ak.Size=UDim2.new(0,1,0.7,0)
-am.TextButton.Position=UDim2.new(0,42,0,0)
-am.TextButton.Size=UDim2.new(1,-46,1,0)
+
+am.TextButton.Position=UDim2.new(0,dragWidth,0,0)
+am.TextButton.Size=UDim2.new(1,-dragWidth-4,1,0)
 am.TextButton.AnchorPoint=Vector2.new(0,0)
 am.TextButton.AutomaticSize=Enum.AutomaticSize.None
+
 local innerList=am.TextButton:FindFirstChildOfClass("UIListLayout")
 if innerList then innerList:Destroy() end
+
 local padding=am.TextButton:FindFirstChildOfClass("UIPadding")
-if padding then padding.PaddingLeft=UDim.new(0,6) padding.PaddingRight=UDim.new(0,6) end
+if padding then
+padding.PaddingLeft=UDim.new(0,8)
+padding.PaddingRight=UDim.new(0,8)
+end
+
 if ah and ah.Parent then
 ah.Position=UDim2.new(0,0,0.5,0)
 ah.AnchorPoint=Vector2.new(0,0.5)
 ah.Size=UDim2.new(0,18,0,18)
 end
-local iconOff=(ah and ah.Parent) and 22 or 0
-ai.Position=UDim2.new(0,iconOff,0.5,0)
+
+local iconOffset=(ah and ah.Parent) and 24 or 0
+ai.Position=UDim2.new(0,iconOffset,0.5,0)
 ai.AnchorPoint=Vector2.new(0,0.5)
-ai.Size=UDim2.new(1,-iconOff,0.8,0)
+ai.Size=UDim2.new(1,-iconOffset,1,0)
 ai.AutomaticSize=Enum.AutomaticSize.None
-ai.TextScaled=true
+ai.TextSize=16
+ai.TextScaled=false
 ai.TextWrapped=false
 ai.TextXAlignment=Enum.TextXAlignment.Left
+ai.TextYAlignment=Enum.TextYAlignment.Center
 ai.ClipsDescendants=true
-local constraint=ai:FindFirstChildOfClass("UITextSizeConstraint")
-if not constraint then constraint=Instance.new("UITextSizeConstraint") constraint.Parent=ai end
-constraint.MaxTextSize=16
-constraint.MinTextSize=8
+ai.TextTruncate=Enum.TextTruncate.AtEnd
 end
 end
 
