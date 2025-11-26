@@ -4306,7 +4306,7 @@ aj.AnchorPoint=Vector2.new(0,0.5)
 ak.Position=UDim2.new(0,40,0.5,0)
 ak.AnchorPoint=Vector2.new(0,0.5)
 am.TextButton.Position=UDim2.new(0,dragWidth,0,0)
-am.TextButton.Size=UDim2.new(1,-dragWidth-8,1,0)
+am.TextButton.Size=UDim2.new(1,-dragWidth-4,1,0)
 am.TextButton.AnchorPoint=Vector2.new(0,0)
 am.TextButton.AutomaticSize=Enum.AutomaticSize.None
 local innerList=am.TextButton:FindFirstChildOfClass("UIListLayout")
@@ -4314,16 +4314,23 @@ if innerList then innerList:Destroy() end
 if ah and ah.Parent then
 ah.Position=UDim2.new(0,0,0.5,0)
 ah.AnchorPoint=Vector2.new(0,0.5)
+ah.Size=UDim2.new(0,20,0,20)
 end
-local iconOffset=ah and 28 or 0
+local iconOffset=ah and ah.Parent and 24 or 0
 ai.Position=UDim2.new(0,iconOffset,0.5,0)
 ai.AnchorPoint=Vector2.new(0,0.5)
-ai.Size=UDim2.new(1,-iconOffset,0,20)
+ai.Size=UDim2.new(1,-iconOffset-4,1,-4)
 ai.AutomaticSize=Enum.AutomaticSize.None
-ai.TextTruncate=Enum.TextTruncate.AtEnd
-ai.TextXAlignment=Enum.TextXAlignment.Left
-ai.TextScaled=false
+ai.TextScaled=true
 ai.TextWrapped=false
+ai.TextXAlignment=Enum.TextXAlignment.Left
+local textConstraint=ai:FindFirstChildOfClass("UITextSizeConstraint")
+if not textConstraint then
+textConstraint=Instance.new("UITextSizeConstraint")
+textConstraint.Parent=ai
+end
+textConstraint.MaxTextSize=17
+textConstraint.MinTextSize=10
 end
 end
 
