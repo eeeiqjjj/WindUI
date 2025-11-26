@@ -4295,14 +4295,33 @@ if aq.Size then
 if typeof(aq.Size)=="number" then
 am.Size=UDim2.new(0,am.AbsoluteSize.X,0,aq.Size)
 elseif typeof(aq.Size)=="UDim2" then
+local dragWidth=44
 am.Size=aq.Size
 am.AutomaticSize=Enum.AutomaticSize.None
 al.Size=aq.Size
-am.TextButton.Size=UDim2.new(1,-44,1,0)
+local uiList=am:FindFirstChildOfClass("UIListLayout")
+if uiList then uiList:Destroy() end
+aj.Position=UDim2.new(0,4,0.5,0)
+aj.AnchorPoint=Vector2.new(0,0.5)
+ak.Position=UDim2.new(0,40,0.5,0)
+ak.AnchorPoint=Vector2.new(0,0.5)
+am.TextButton.Position=UDim2.new(0,dragWidth,0,0)
+am.TextButton.Size=UDim2.new(1,-dragWidth-8,1,0)
+am.TextButton.AnchorPoint=Vector2.new(0,0)
 am.TextButton.AutomaticSize=Enum.AutomaticSize.None
-ai.Size=UDim2.new(1,0,1,0)
+local innerList=am.TextButton:FindFirstChildOfClass("UIListLayout")
+if innerList then innerList:Destroy() end
+if ah and ah.Parent then
+ah.Position=UDim2.new(0,0,0.5,0)
+ah.AnchorPoint=Vector2.new(0,0.5)
+end
+local iconOffset=ah and 28 or 0
+ai.Position=UDim2.new(0,iconOffset,0.5,0)
+ai.AnchorPoint=Vector2.new(0,0.5)
+ai.Size=UDim2.new(1,-iconOffset,0,20)
 ai.AutomaticSize=Enum.AutomaticSize.None
 ai.TextTruncate=Enum.TextTruncate.AtEnd
+ai.TextXAlignment=Enum.TextXAlignment.Left
 ai.TextScaled=false
 ai.TextWrapped=false
 end
