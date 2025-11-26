@@ -1,4 +1,3 @@
-
 --[[
      _      ___         ____  ______
     | | /| / (_)__  ___/ / / / /  _/
@@ -4197,7 +4196,7 @@ VerticalAlignment="Center",
 }),
 
 ac("TextButton",{
-AutomaticSize="X",
+AutomaticSize="XY",
 Active=true,
 BackgroundTransparency=1,
 Size=UDim2.new(0,0,0,36),
@@ -4255,16 +4254,13 @@ end
 
 
 
-
-ag.FixedHeight=44
 ab.AddSignal(am:GetPropertyChangedSignal"AbsoluteSize",function()
-if not ag.CustomSizeEnabled then
 al.Size=UDim2.new(
 0,am.AbsoluteSize.X,
-0,ag.FixedHeight
+0,am.AbsoluteSize.Y
 )
-end
 end)
+
 ab.AddSignal(am.TextButton.MouseEnter,function()
 ad(am.TextButton,.1,{BackgroundTransparency=.93}):Play()
 end)
@@ -4292,48 +4288,7 @@ CornerRadius=ap.CornerRadius or UDim.new(1,0),
 StrokeThickness=ap.StrokeThickness or 2,
 Color=ap.Color
 or ColorSequence.new(Color3.fromHex"40c9ff",Color3.fromHex"e81cff"),
-Size=ap.Size,
 }
-
-ag.FixedHeight = 44
-if aq.Size and typeof(aq.Size)=="number" then
-ag.FixedHeight = aq.Size
-end
-
-local uiScale = am:FindFirstChildOfClass("UIScale")
-if uiScale then uiScale.Scale = 1 end
-
-am.Size=UDim2.new(0,0,0,ag.FixedHeight)
-am.AutomaticSize=Enum.AutomaticSize.X
-
-am.TextButton.Size=UDim2.new(0,0,0,ag.FixedHeight-8)
-am.TextButton.AutomaticSize=Enum.AutomaticSize.X
-
-local innerPadding = am.TextButton:FindFirstChildOfClass("UIPadding")
-if innerPadding then
-innerPadding.PaddingLeft=UDim.new(0,11)
-innerPadding.PaddingRight=UDim.new(0,11)
-end
-
-local innerLayout = am.TextButton:FindFirstChildOfClass("UIListLayout")
-if innerLayout then
-innerLayout.Padding=UDim.new(0,8)
-end
-
-aj.Size=UDim2.new(0,36,0,36)
-local dragIcon = aj:FindFirstChildOfClass("ImageLabel")
-if dragIcon then dragIcon.Size=UDim2.new(0,18,0,18) end
-
-ak.Size=UDim2.new(0,1,1,0)
-
-ai.TextSize=17
-ai.AutomaticSize=Enum.AutomaticSize.XY
-
-if ah and ah.Parent then
-ah.Size=UDim2.new(0,22,0,22)
-end
-
-al.Size=UDim2.new(0,am.AbsoluteSize.X,0,ag.FixedHeight)
 
 
 
@@ -9433,7 +9388,7 @@ Icon=ak.Icon,
 IconThemed=ak.IconThemed,
 Opened=ak.Opened or false,
 
-HeaderSize=ak.Desc and 56 or 42,
+HeaderSize=ak.Desc and 0 or 42,
 IconSize=18,
 
 Expandable=false,
@@ -9531,16 +9486,16 @@ SliceCenter=Rect.new(128,128,128,128)
 end
 
 local as=af("Frame",{
-Size=UDim2.new(1,0,0,ap.HeaderSize),
-AutomaticSize="None",
+Size=ap.Desc and UDim2.new(1,0,0,0) or UDim2.new(1,0,0,ap.HeaderSize),
+AutomaticSize=ap.Desc and"Y"or"None",
 BackgroundTransparency=1,
 Parent=al,
-ClipsDescendants=true,
+ClipsDescendants=false,
 },{
 au,
 af("TextButton",{
-Size=UDim2.new(1,0,0,ap.HeaderSize),
-AutomaticSize="None",
+Size=ap.Desc and UDim2.new(1,0,0,0) or UDim2.new(1,0,0,ap.HeaderSize),
+AutomaticSize=ap.Desc and"Y"or"None",
 BackgroundTransparency=1,
 Text="",
 },{
@@ -9585,7 +9540,7 @@ Size=UDim2.new(1,0,0,0),
 AutomaticSize="Y",
 Name="Content",
 Visible=true,
-Position=UDim2.new(0,0,0,ap.HeaderSize)
+Position=ap.Desc and UDim2.new(0,0,1,0)or UDim2.new(0,0,0,ap.HeaderSize)
 },{
 af("UIListLayout",{
 FillDirection="Vertical",
@@ -9608,9 +9563,15 @@ end
 function ap.Open(au)
 if ap.Expandable then
 ap.Opened=true
+if ap.Desc then
+ah(as,0.33,{
+Size=UDim2.new(1,0,0,as.TextButton.AbsoluteSize.Y+(as.Content.AbsoluteSize.Y/an))
+},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
+else
 ah(as,0.33,{
 Size=UDim2.new(1,0,0,ap.HeaderSize+(as.Content.AbsoluteSize.Y/an))
 },Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
+end
 
 ah(ar.ImageLabel,0.1,{Rotation=180},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
 end
@@ -9618,9 +9579,15 @@ end
 function ap.Close(au)
 if ap.Expandable then
 ap.Opened=false
+if ap.Desc then
+ah(as,0.26,{
+Size=UDim2.new(1,0,0,as.TextButton.AbsoluteSize.Y)
+},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
+else
 ah(as,0.26,{
 Size=UDim2.new(1,0,0,ap.HeaderSize)
 },Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
+end
 ah(ar.ImageLabel,0.1,{Rotation=0},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
 end
 end
