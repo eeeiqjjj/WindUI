@@ -9388,7 +9388,7 @@ Icon=ak.Icon,
 IconThemed=ak.IconThemed,
 Opened=ak.Opened or false,
 
-HeaderSize=42,
+HeaderSize=ak.Desc and 0 or 42,
 IconSize=18,
 
 Expandable=false,
@@ -9486,15 +9486,16 @@ SliceCenter=Rect.new(128,128,128,128)
 end
 
 local as=af("Frame",{
-Size=UDim2.new(1,0,0,42),
+Size=ap.Desc and UDim2.new(1,0,0,0) or UDim2.new(1,0,0,ap.HeaderSize),
+AutomaticSize=ap.Desc and"Y"or"None",
 BackgroundTransparency=1,
 Parent=al,
 ClipsDescendants=false,
 },{
 au,
 af("TextButton",{
-Size=UDim2.new(1,0,0,0),
-AutomaticSize="Y",
+Size=ap.Desc and UDim2.new(1,0,0,0) or UDim2.new(1,0,0,ap.HeaderSize),
+AutomaticSize=ap.Desc and"Y"or"None",
 BackgroundTransparency=1,
 Text="",
 },{
@@ -9539,7 +9540,7 @@ Size=UDim2.new(1,0,0,0),
 AutomaticSize="Y",
 Name="Content",
 Visible=true,
-Position=UDim2.new(0,0,0,42)
+Position=ap.Desc and UDim2.new(0,0,1,0)or UDim2.new(0,0,0,ap.HeaderSize)
 },{
 af("UIListLayout",{
 FillDirection="Vertical",
@@ -9549,18 +9550,6 @@ VerticalAlignment="Bottom",
 })
 })
 
-if ap.Desc then
-local function updateHeaderSize()
-local h=as.TextButton.AbsoluteSize.Y
-as.Size=UDim2.new(1,0,0,h)
-as.Content.Position=UDim2.new(0,0,0,h)
-end
-task.spawn(function()
-task.wait()
-updateHeaderSize()
-end)
-ae.AddSignal(as.TextButton:GetPropertyChangedSignal("AbsoluteSize"),updateHeaderSize)
-end
 
 function ap.Tab(au,av)
 if not ap.Expandable then
