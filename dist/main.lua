@@ -4298,10 +4298,40 @@ ag.FixedHeight = 44
 if aq.Size and typeof(aq.Size)=="number" then
 ag.FixedHeight = aq.Size
 end
+
+local uiScale = am:FindFirstChildOfClass("UIScale")
+if uiScale then uiScale.Scale = 1 end
+
 am.Size=UDim2.new(0,0,0,ag.FixedHeight)
 am.AutomaticSize=Enum.AutomaticSize.X
+
 am.TextButton.Size=UDim2.new(0,0,0,ag.FixedHeight-8)
 am.TextButton.AutomaticSize=Enum.AutomaticSize.X
+
+local innerPadding = am.TextButton:FindFirstChildOfClass("UIPadding")
+if innerPadding then
+innerPadding.PaddingLeft=UDim.new(0,11)
+innerPadding.PaddingRight=UDim.new(0,11)
+end
+
+local innerLayout = am.TextButton:FindFirstChildOfClass("UIListLayout")
+if innerLayout then
+innerLayout.Padding=UDim.new(0,8)
+end
+
+aj.Size=UDim2.new(0,36,0,36)
+local dragIcon = aj:FindFirstChildOfClass("ImageLabel")
+if dragIcon then dragIcon.Size=UDim2.new(0,18,0,18) end
+
+ak.Size=UDim2.new(0,1,1,0)
+
+ai.TextSize=17
+ai.AutomaticSize=Enum.AutomaticSize.XY
+
+if ah and ah.Parent then
+ah.Size=UDim2.new(0,22,0,22)
+end
+
 al.Size=UDim2.new(0,am.AbsoluteSize.X,0,ag.FixedHeight)
 
 
