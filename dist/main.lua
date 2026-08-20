@@ -9240,11 +9240,14 @@ end)
 end
 
 af.AddSignal(ap.UIElements.Main.MouseEnter,function()
+pcall(function()
 if not ap.Locked then
 aj(ap.UIElements.Main.Frame,0.08,{ImageTransparency=.97}):Play()
 end
 end)
+end)
 af.AddSignal(ap.UIElements.Main.InputEnded,function()
+pcall(function()
 if ap.Desc then
 ay=false
 if aw then
@@ -9265,19 +9268,27 @@ if not ap.Locked then
 aj(ap.UIElements.Main.Frame,0.08,{ImageTransparency=1}):Play()
 end
 end)
+end)
 
 
 
 function ap.ScrollToTheElement(az,aA)
 ap.UIElements.ContainerFrame.ScrollingEnabled=false
+local ok,elementPosition,containerPosition,paddingTop=pcall(function()
+return
+ap.Elements[aA].ElementFrame.AbsolutePosition.Y,
+ap.UIElements.ContainerFrame.AbsolutePosition.Y,
+ap.UIElements.ContainerFrame.UIPadding.PaddingTop.Offset
+end)
+if not ok or not elementPosition or not containerPosition or not paddingTop then
+ap.UIElements.ContainerFrame.ScrollingEnabled=true
+return ap
+end
 aj(ap.UIElements.ContainerFrame,.45,
 {
 CanvasPosition=Vector2.new(
 0,
-
-ap.Elements[aA].ElementFrame.AbsolutePosition.Y
--ap.UIElements.ContainerFrame.AbsolutePosition.Y
--ap.UIElements.ContainerFrame.UIPadding.PaddingTop.Offset
+elementPosition-containerPosition-paddingTop
 )
 },
 Enum.EasingStyle.Quint,Enum.EasingDirection.Out
