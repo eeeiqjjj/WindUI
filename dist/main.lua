@@ -532,17 +532,7 @@ return x
 end
 
 function p.Tween(r,u,v,...)
-local ok,tween=pcall(function()
 return f:Create(r,TweenInfo.new(u,...),v)
-end)
-if ok then
-return tween
-end
-return{
-Play=function()end,
-Pause=function()end,
-Cancel=function()end,
-}
 end
 
 function p.NewRoundFrame(r,u,v,x,B,C)
