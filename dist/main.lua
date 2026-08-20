@@ -629,7 +629,7 @@ end
 
 local function update(L)
 if not F or not J.CanDraggable then return end
-
+if not H or not G or not L or not L.Position then return end
 local M=L.Position-G
 p.Tween(v,0.02,{Position=UDim2.new(
 H.X.Scale,H.X.Offset+M.X,
@@ -6996,11 +6996,16 @@ end)
 aj.AddSignal(ae.InputBegan,function(at)
 if at.UserInputType==Enum.UserInputType.MouseButton1 or at.UserInputType==Enum.UserInputType.Touch then
 local au=an.UIElements.MenuCanvas
-local av,aw=au.AbsolutePosition,au.AbsoluteSize
+local ok,av,aw=pcall(function()
+return au.AbsolutePosition,au.AbsoluteSize
+end)
+if not ok or not av or not aw then return end
 
 local ax=an.UIElements.Dropdown or an.DropdownFrame.UIElements.Main
-local ay=ax.AbsolutePosition
-local az=ax.AbsoluteSize
+local ok2,ay,az=pcall(function()
+return ax.AbsolutePosition,ax.AbsoluteSize
+end)
+if not ok2 or not ay or not az then return end
 
 local aA=
 af.X>=ay.X and
