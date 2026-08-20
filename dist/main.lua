@@ -629,7 +629,7 @@ end
 
 local function update(L)
 if not F or not J.CanDraggable then return end
-if not H or not G or not L or not L.Position then return end
+
 local M=L.Position-G
 p.Tween(v,0.02,{Position=UDim2.new(
 H.X.Scale,H.X.Offset+M.X,
@@ -6996,16 +6996,11 @@ end)
 aj.AddSignal(ae.InputBegan,function(at)
 if at.UserInputType==Enum.UserInputType.MouseButton1 or at.UserInputType==Enum.UserInputType.Touch then
 local au=an.UIElements.MenuCanvas
-local ok,av,aw=pcall(function()
-return au.AbsolutePosition,au.AbsoluteSize
-end)
-if not ok or not av or not aw then return end
+local av,aw=au.AbsolutePosition,au.AbsoluteSize
 
 local ax=an.UIElements.Dropdown or an.DropdownFrame.UIElements.Main
-local ok2,ay,az=pcall(function()
-return ax.AbsolutePosition,ax.AbsoluteSize
-end)
-if not ok2 or not ay or not az then return end
+local ay=ax.AbsolutePosition
+local az=ax.AbsoluteSize
 
 local aA=
 af.X>=ay.X and
@@ -9240,14 +9235,11 @@ end)
 end
 
 af.AddSignal(ap.UIElements.Main.MouseEnter,function()
-pcall(function()
 if not ap.Locked then
 aj(ap.UIElements.Main.Frame,0.08,{ImageTransparency=.97}):Play()
 end
 end)
-end)
 af.AddSignal(ap.UIElements.Main.InputEnded,function()
-pcall(function()
 if ap.Desc then
 ay=false
 if aw then
@@ -9268,27 +9260,19 @@ if not ap.Locked then
 aj(ap.UIElements.Main.Frame,0.08,{ImageTransparency=1}):Play()
 end
 end)
-end)
 
 
 
 function ap.ScrollToTheElement(az,aA)
 ap.UIElements.ContainerFrame.ScrollingEnabled=false
-local ok,elementPosition,containerPosition,paddingTop=pcall(function()
-return
-ap.Elements[aA].ElementFrame.AbsolutePosition.Y,
-ap.UIElements.ContainerFrame.AbsolutePosition.Y,
-ap.UIElements.ContainerFrame.UIPadding.PaddingTop.Offset
-end)
-if not ok or not elementPosition or not containerPosition or not paddingTop then
-ap.UIElements.ContainerFrame.ScrollingEnabled=true
-return ap
-end
 aj(ap.UIElements.ContainerFrame,.45,
 {
 CanvasPosition=Vector2.new(
 0,
-elementPosition-containerPosition-paddingTop
+
+ap.Elements[aA].ElementFrame.AbsolutePosition.Y
+-ap.UIElements.ContainerFrame.AbsolutePosition.Y
+-ap.UIElements.ContainerFrame.UIPadding.PaddingTop.Offset
 )
 },
 Enum.EasingStyle.Quint,Enum.EasingDirection.Out
