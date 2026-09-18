@@ -4162,6 +4162,19 @@ Button=nil
 
 local ah
 
+local function getInheritedScale(object)
+local inheritedScale=1
+local parent=object.Parent
+while parent do
+local parentScale=parent:FindFirstChildOfClass"UIScale"
+if parentScale then
+inheritedScale*=math.max(parentScale.Scale,0.001)
+end
+parent=parent.Parent
+end
+return inheritedScale
+end
+
 
 
 
@@ -4341,6 +4354,7 @@ Position=ap.Position,
 OnlyIcon=ap.OnlyIcon or false,
 Draggable=ap.Draggable or nil,
 OnlyMobile=ap.OnlyMobile,
+Scale=ap.Scale,
 CornerRadius=ap.CornerRadius or UDim.new(1,0),
 StrokeThickness=ap.StrokeThickness or 2,
 Color=ap.Color
@@ -4408,6 +4422,7 @@ end
 am.UICorner.CornerRadius=aq.CornerRadius
 am.TextButton.UICorner.CornerRadius=UDim.new(aq.CornerRadius.Scale,aq.CornerRadius.Offset-4)
 am.UIStroke.Thickness=aq.StrokeThickness
+am.UIScale.Scale=aq.Scale or(1/getInheritedScale(am))
 end
 
 return ag
